@@ -4,7 +4,7 @@
   --grid-major: rgba(80, 140, 255, 0.15);
   --text: #e6edf7;
   --muted: #8a9bb5;
-  --heat: linear-gradient(90deg, #2b6cff, #00d1b2, #ffd400, #ff6a00, #ff2d55);
+  --heat: linear-gradient(90deg, #22c55e, #facc15, #f97316, #ef4444);
   font-family: system-ui, "Segoe UI", Roboto, sans-serif;
   color: var(--text);
 }
@@ -50,6 +50,7 @@ h1 {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  width: fit-content;
 }
 
 .subtitle {
