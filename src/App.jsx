@@ -1,24 +1,57 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Lenis from 'lenis'
+import 'lenis/dist/lenis.css'
 import Cursor from './Cursor'
+import About from './About'
+
+gsap.registerPlugin(ScrollTrigger)
 
 function App() {
   const heroRef = useRef(null)
 
+  // smooth scrolling (Lenis), synced with GSAP ScrollTrigger
+  useEffect(() => {
+    const lenis = new Lenis({lerp: 0.07, smoothWheel: true, smoothTouch: false})
+    lenis.on('scroll', ScrollTrigger.update)
+    const raf = (time) => lenis.raf(time * 1000)
+    gsap.ticker.add(raf)
+    gsap.ticker.lagSmoothing(0)
+
+    return () => {
+      gsap.ticker.remove(raf)
+      lenis.destroy()
+    }
+  }, [])
+
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // every direct child of .hero slides up and fades in, one after another
+      // 1) intro when the page loads
       gsap.from('.hero > *', {
-        y: 40,             // start 40px lower
-        opacity: 0,        // start invisible
-        duration: 0.9,     // each element takes 0.9 s
+        y: 40,
+        opacity: 0,
+        duration: 1.4,
         ease: 'power3.out',
-        stagger: 0.15,     // 0.15 s delay between elements
+        stagger: 0.25,
         delay: 0.2,
+      })
+
+      // 2) while scrolling down, the hero moves up and fades out (follows the scroll)
+      gsap.to(heroRef.current, {
+        y: -120,
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.5,
+        },
       })
     }, heroRef)
 
-    return () => ctx.revert() // clean up
+    return () => ctx.revert()
   }, [])
 
   return (
@@ -32,6 +65,7 @@ function App() {
           View my work →
         </a>
       </main>
+      <About />
     </>
   )
 }

@@ -1,0 +1,49 @@
+.about {
+  min-height: 100vh;
+  padding: 20vh 8vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 1100px;
+}
+
+.section-label {
+  font-family: monospace;
+  color: var(--muted);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.about h2 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  max-width: 18ch;
+}
+
+.about-text {
+  color: var(--muted);
+  font-size: 1.15rem;
+  line-height: 1.7;
+  max-width: 60ch;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.about-stats div {
+  border-left: 2px solid #22c55e;
+  padding-left: 1rem;
+  color: var(--muted);
+}
+
+.about-stats span {
+  display: block;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text);
+}
